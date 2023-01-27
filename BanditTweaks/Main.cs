@@ -65,8 +65,6 @@ namespace HBT
                 }
             }
             NetworkingAPI.RegisterMessageType<SyncCooldownReduction>();
-
-            On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
         }
 
         public bool ValidateTweak(TweakBase tb)
