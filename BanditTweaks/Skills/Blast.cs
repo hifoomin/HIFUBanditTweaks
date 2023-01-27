@@ -31,7 +31,7 @@ namespace HBT.Skills
             Changes();
         }
 
-        private EntityStates.InterruptPriority Bandit2FirePrimaryBase_GetMinimumInterruptPriority(On.EntityStates.Bandit2.Weapon.Bandit2FirePrimaryBase.orig_GetMinimumInterruptPriority orig, EntityStates.Bandit2.Weapon.Bandit2FirePrimaryBase self)
+        private InterruptPriority Bandit2FirePrimaryBase_GetMinimumInterruptPriority(On.EntityStates.Bandit2.Weapon.Bandit2FirePrimaryBase.orig_GetMinimumInterruptPriority orig, EntityStates.Bandit2.Weapon.Bandit2FirePrimaryBase self)
         {
             if (self.fixedAge <= self.minimumDuration && self.inputBank.skill1.wasDown)
             {

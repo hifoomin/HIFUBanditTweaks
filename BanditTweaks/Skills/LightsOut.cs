@@ -1,8 +1,10 @@
 ﻿using R2API;
+using R2API.Networking.Interfaces;
 using RoR2;
 using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
 using static R2API.DamageAPI;
 
 namespace HBT.Skills
@@ -24,7 +26,7 @@ namespace HBT.Skills
         {
             Cooldown = ConfigOption(6f, "Cooldown", "Vanilla is 4");
             Damage = ConfigOption(8f, "Damage", "Decimal. Vanilla is 6");
-            CooldownReduction = ConfigOption(0.12f, "Non-Special Cooldown Reduction on Kill", "Decimal. Vanilla is 1");
+            CooldownReduction = ConfigOption(0.3f, "Non-Special Cooldown Reduction on Kill", "Decimal. Vanilla is 1");
             base.Init();
         }
 
@@ -32,53 +34,52 @@ namespace HBT.Skills
         {
             On.EntityStates.Bandit2.Weapon.BaseFireSidearmRevolverState.OnEnter += BaseFireSidearmRevolverState_OnEnter;
             On.EntityStates.Bandit2.Weapon.FireSidearmResetRevolver.ModifyBullet += FireSidearmResetRevolver_ModifyBullet;
-            On.RoR2.GlobalEventManager.OnCharacterDeath += GlobalEventManager_OnCharacterDeath;
+            GlobalEventManager.onCharacterDeathGlobal += GlobalEventManager_onCharacterDeathGlobal;
             Changes();
         }
 
-        private void GlobalEventManager_OnCharacterDeath(On.RoR2.GlobalEventManager.orig_OnCharacterDeath orig, GlobalEventManager self, DamageReport damageReport)
+        private void GlobalEventManager_onCharacterDeathGlobal(DamageReport damageReport)
         {
-            var di = damageReport.damageInfo;
+            var damageInfo = damageReport.damageInfo;
 
-            if (DamageAPI.HasModdedDamageType(di, cooldownReset))
+            if (DamageAPI.HasModdedDamageType(damageInfo, cooldownReset))
             {
-                Debug.LogError("HAS MODDED DAMAGE TYPE");
                 EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/ImpactEffects/Bandit2ResetEffect"), new EffectData
                 {
-                    origin = di.position
+                    origin = damageInfo.position
                 }, true);
 
-                var sl = damageReport.attacker.GetComponent<SkillLocator>();
-                if (sl)
+                var attacker = damageReport.attacker;
+                if (attacker)
                 {
-                    Debug.LogError("SKILL LOCATOR FOUND");
-                    var primary = sl.primary;
-                    var secondary = sl.secondary;
-                    var utility = sl.utility;
-                    var special = sl.special;
-                    if (primary && primary.stock < primary.maxStock)
+                    new SyncCooldownReduction(attacker.GetComponent<NetworkIdentity>().netId, CooldownReduction).Send(R2API.Networking.NetworkDestination.Clients);
+
+                    var sl = attacker.GetComponent<SkillLocator>();
+                    if (sl)
                     {
-                        Debug.LogError("HAS PRIMARY AND PRIMARY STOCK IS BELOW MAX STOCK");
-                        primary.rechargeStopwatch += primary.finalRechargeInterval * CooldownReduction;
-                    }
-                    if (secondary && secondary.stock < secondary.maxStock)
-                    {
-                        Debug.LogError("HAS SECONDARY AND UTILITY STOCK IS BELOW MAX STOCK");
-                        secondary.rechargeStopwatch += secondary.finalRechargeInterval * CooldownReduction;
-                    }
-                    if (utility && utility.stock < utility.maxStock)
-                    {
-                        Debug.LogError("HAS UTILITY AND UTILITY STOCK IS BELOW MAX STOCK");
-                        utility.rechargeStopwatch += utility.finalRechargeInterval * CooldownReduction;
-                    }
-                    if (special && special.stock < special.maxStock)
-                    {
-                        Debug.LogError("HAS SPECIAL AND SPECIAL STOCK IS BELOW MAX STOCK");
-                        special.rechargeStopwatch += special.finalRechargeInterval * 1f;
+                        var primary = sl.primary;
+                        var secondary = sl.secondary;
+                        var utility = sl.utility;
+                        var special = sl.special;
+                        if (primary && primary.stock < primary.maxStock)
+                        {
+                            primary.rechargeStopwatch += primary.finalRechargeInterval * CooldownReduction;
+                        }
+                        if (secondary && secondary.stock < secondary.maxStock)
+                        {
+                            secondary.rechargeStopwatch += secondary.finalRechargeInterval * CooldownReduction;
+                        }
+                        if (utility && utility.stock < utility.maxStock)
+                        {
+                            utility.rechargeStopwatch += utility.finalRechargeInterval * CooldownReduction;
+                        }
+                        if (special && special.stock < special.maxStock)
+                        {
+                            special.rechargeStopwatch += special.finalRechargeInterval * 1f;
+                        }
                     }
                 }
             }
-            orig(self, damageReport);
         }
 
         private void FireSidearmResetRevolver_ModifyBullet(On.EntityStates.Bandit2.Weapon.FireSidearmResetRevolver.orig_ModifyBullet orig, EntityStates.Bandit2.Weapon.FireSidearmResetRevolver self, RoR2.BulletAttack bulletAttack)
@@ -101,6 +102,66 @@ namespace HBT.Skills
         {
             var reset = Addressables.LoadAssetAsync<SkillDef>("RoR2/Base/Bandit2/ResetRevolver.asset").WaitForCompletion();
             reset.baseRechargeInterval = Cooldown;
+        }
+    }
+
+    public class SyncCooldownReduction : INetMessage
+    {
+        private NetworkInstanceId objID;
+        private float cooldownReduction;
+
+        public SyncCooldownReduction()
+        { }
+
+        public SyncCooldownReduction(NetworkInstanceId objID, float cooldownReduction)
+        {
+            this.objID = objID;
+            this.cooldownReduction = cooldownReduction;
+        }
+
+        public void Deserialize(NetworkReader reader)
+        {
+            objID = reader.ReadNetworkId();
+            cooldownReduction = reader.ReadSingle();
+        }
+
+        public void OnReceived()
+        {
+            if (NetworkServer.active) return;
+            var obj = Util.FindNetworkObject(objID);
+            if (obj)
+            {
+                var sl = obj.GetComponent<SkillLocator>();
+                if (sl)
+                {
+                    var primary = sl.primary;
+                    var secondary = sl.secondary;
+                    var utility = sl.utility;
+                    var special = sl.special;
+                    if (primary && primary.stock < primary.maxStock)
+                    {
+                        primary.rechargeStopwatch += primary.finalRechargeInterval * cooldownReduction;
+                    }
+                    if (secondary && secondary.stock < secondary.maxStock)
+                    {
+                        secondary.rechargeStopwatch += secondary.finalRechargeInterval * cooldownReduction;
+                    }
+                    if (utility && utility.stock < utility.maxStock)
+                    {
+                        utility.rechargeStopwatch += utility.finalRechargeInterval * cooldownReduction;
+                    }
+                    if (special && special.stock < special.maxStock)
+                    {
+                        special.rechargeStopwatch += special.finalRechargeInterval * 1f;
+                    }
+                }
+            }
+        }
+
+        public void Serialize(NetworkWriter writer)
+        {
+            writer.Write(objID);
+            writer.Write(cooldownReduction);
         }
     }
 }

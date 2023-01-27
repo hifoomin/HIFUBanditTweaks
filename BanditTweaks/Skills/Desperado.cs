@@ -14,7 +14,7 @@ namespace HBT.Skills
 
         public override string SkillToken => "special_alt";
 
-        public override string DescText => "<style=cIsDamage>Slayer</style>. Fire a revolver shot for <style=cIsDamage>" + d(Damage) + " damage</style>. Kills grant <style=cIsDamage>stacking tokens</style> for <style=cIsDamage>" + d(StackDamage) + "</style> more Desperado damage.";
+        public override string DescText => "<style=cIsDamage>Slayer</style>. Fire a revolver shot for <style=cIsDamage>" + d(Damage) + " damage</style>. Kills grant <style=cIsDamage>stacking tokens</style> for <style=cIsDamage>" + d(StackDamage * Damage) + "</style> more Desperado damage.";
 
         public override void Init()
         {

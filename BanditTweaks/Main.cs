@@ -1,8 +1,10 @@
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
+using HBT.Skills;
 using R2API;
 using R2API.ContentManagement;
+using R2API.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,7 @@ namespace HBT
     [BepInDependency(DamageAPI.PluginGUID)]
     [BepInDependency(R2APIContentManager.PluginGUID)]
     [BepInDependency(RecalculateStatsAPI.PluginGUID)]
+    [BepInDependency(NetworkingAPI.PluginGUID)]
     [BepInDependency("com.Wolfo.WolfoQualityOfLife", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
     public class Main : BaseUnityPlugin
@@ -22,12 +25,10 @@ namespace HBT
 
         public const string PluginAuthor = "HIFU";
         public const string PluginName = "HIFUBanditTweaks";
-        public const string PluginVersion = "1.0.2";
+        public const string PluginVersion = "1.1.0";
 
         public static ConfigFile HBTConfig;
         public static ManualLogSource HBTLogger;
-
-        private string version = PluginVersion;
 
         public void Awake()
         {
@@ -63,6 +64,7 @@ namespace HBT
                     based.Init();
                 }
             }
+            NetworkingAPI.RegisterMessageType<SyncCooldownReduction>();
 
             On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
         }
