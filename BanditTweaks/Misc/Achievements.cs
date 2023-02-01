@@ -25,11 +25,11 @@ namespace HBT.Misc
         {
             On.RoR2.Achievements.Bandit2.Bandit2StackSuperBleedAchievement.LookUpRequiredBodyIndex += Bandit2StackSuperBleedAchievement_LookUpRequiredBodyIndex;
             On.RoR2.Achievements.Bandit2.Bandit2RevolverFinaleAchievement.Bandit2RevolverFinaleServerAchievement.DoesDamageQualify += Bandit2RevolverFinaleServerAchievement_DoesDamageQualify;
-            hook = new(typeof(Achievements).GetMethod(nameof(Bandit2ConsecutiveResetServerAchievement_OnCharacterDeathGlobal), BindingFlags.NonPublic | BindingFlags.Instance), typeof(Bandit2ConsecutiveResetAchievement.Bandit2ConsecutiveResetServerAchievement).GetMethod(nameof(Bandit2ConsecutiveResetAchievement.Bandit2ConsecutiveResetServerAchievement.OnCharacterDeathGlobal), BindingFlags.NonPublic | BindingFlags.Instance));
+            hook = new(typeof(Achievements).GetMethod(nameof(Bandit2ConsecutiveResetServerAchievement_OnCharacterDeathGlobal), BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static), typeof(Bandit2ConsecutiveResetAchievement.Bandit2ConsecutiveResetServerAchievement).GetMethod(nameof(Bandit2ConsecutiveResetAchievement.Bandit2ConsecutiveResetServerAchievement.OnCharacterDeathGlobal), BindingFlags.NonPublic | BindingFlags.Instance));
             Changes();
         }
 
-        private void Bandit2ConsecutiveResetServerAchievement_OnCharacterDeathGlobal(Bandit2ConsecutiveResetAchievement.Bandit2ConsecutiveResetServerAchievement orig, DamageReport damageReport)
+        private static void Bandit2ConsecutiveResetServerAchievement_OnCharacterDeathGlobal(Bandit2ConsecutiveResetAchievement.Bandit2ConsecutiveResetServerAchievement orig, DamageReport damageReport)
         {
             if (damageReport.attackerBody == orig.trackedBody && damageReport.attackerBody && ((damageReport.damageInfo.damageType & DamageType.ResetCooldownsOnKill) == DamageType.ResetCooldownsOnKill) || DamageAPI.HasModdedDamageType(damageReport.damageInfo, LightsOut.cooldownReset))
             {
