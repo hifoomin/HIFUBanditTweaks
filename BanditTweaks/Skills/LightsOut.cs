@@ -9,7 +9,7 @@ using static R2API.DamageAPI;
 
 namespace HBT.Skills
 {
-    public class LightsOut : TweakBase
+    public class LightsOut : TweakBase<LightsOut>
     {
         public static float Damage;
         public static float Cooldown;
