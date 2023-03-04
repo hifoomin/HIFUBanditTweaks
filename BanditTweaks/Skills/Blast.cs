@@ -18,7 +18,7 @@ namespace HBT.Skills
 
         public override void Init()
         {
-            Damage = ConfigOption(2.2f, "Damage", "Decimal. Vanilla is 3.3");
+            Damage = ConfigOption(2.1f, "Damage", "Decimal. Vanilla is 3.3");
             AmmoCount = ConfigOption(6, "Charges", "Vanilla is 4");
             AutofireDur = ConfigOption(0.12f, "Autofire Duration per Bullet", "");
             base.Init();
