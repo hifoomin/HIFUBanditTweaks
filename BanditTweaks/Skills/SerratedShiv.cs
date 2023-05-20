@@ -23,7 +23,7 @@ namespace HBT.Skills
         public override void Init()
         {
             Damage = ConfigOption(2f, "Damage", "Decimal. Vanilla is 3.6");
-            Cooldown = ConfigOption(11f, "Cooldown", "Vanilla is 4");
+            Cooldown = ConfigOption(10f, "Cooldown", "Vanilla is 4");
             Charges = ConfigOption(2, "Charges", "Vanilla is 1");
             ChargesToRecharge = ConfigOption(2, "Charges to Recharge", "Vanilla is 1");
             Sidestep = ConfigOption(true, "Enable sidestep?", "Vanilla is false");

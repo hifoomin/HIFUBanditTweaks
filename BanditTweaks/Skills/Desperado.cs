@@ -14,13 +14,13 @@ namespace HBT.Skills
 
         public override string SkillToken => "special_alt";
 
-        public override string DescText => "<style=cIsDamage>Slayer</style>. Fire a revolver shot for <style=cIsDamage>" + d(Damage) + " damage</style>. Kills grant <style=cIsDamage>stacking tokens</style> for <style=cIsDamage>" + d(StackDamage * Damage) + "</style> more Desperado damage.";
+        public override string DescText => "<style=cIsDamage>Slayer</style>. Fire a revolver shot for <style=cIsDamage>" + d(Damage) + " damage</style>. Kills grant <style=cIsDamage>stacking tokens</style> for <style=cIsDamage>" + d(StackDamage * Damage) + "</style> more Desperado skill damage.";
 
         public override void Init()
         {
             Cooldown = ConfigOption(6f, "Cooldown", "Vanilla is 4");
             Damage = ConfigOption(8f, "Damage", "Decimal. Vanilla is 6");
-            StackDamage = ConfigOption(0.04f, "Desperado Total Damage Percent per Token", "Vanilla is 0.1");
+            StackDamage = ConfigOption(0.05f, "Desperado Total Damage Percent per Token", "Vanilla is 0.1");
             base.Init();
         }
 

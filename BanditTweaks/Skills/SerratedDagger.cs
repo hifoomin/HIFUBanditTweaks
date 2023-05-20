@@ -38,9 +38,9 @@ namespace HBT.Skills
             if (Lunge && self.isAuthority)
             {
                 Vector3 direction = self.GetAimRay().direction;
-                Vector3 a = direction.normalized * 3f * self.moveSpeedStat;
+                Vector3 a = direction.normalized * 2.6f * self.moveSpeedStat;
                 Vector3 b = Vector3.up * 2f;
-                Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * 3f;
+                Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * 2.6f;
                 self.characterMotor.Motor.ForceUnground();
                 self.characterMotor.velocity = a + b + b2;
             }

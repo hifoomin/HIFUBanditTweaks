@@ -21,8 +21,8 @@ namespace HBT.Skills
         public override void Init()
         {
             PelletCount = ConfigOption(5, "Pellet Count", "Vanilla is 5");
-            Damage = ConfigOption(0.7f, "Damage", "Decimal. Vanilla is 1");
-            ProcCoefficient = ConfigOption(0.6f, "Proc Coefficient", "Vanilla is 0.5");
+            Damage = ConfigOption(0.75f, "Damage", "Decimal. Vanilla is 1");
+            ProcCoefficient = ConfigOption(0.7f, "Proc Coefficient", "Vanilla is 0.5");
             AmmoCount = ConfigOption(4, "Charges", "Vanilla is 4");
             AutofireDur = ConfigOption(0.12f, "Autofire Duration per Bullet", "");
             base.Init();
