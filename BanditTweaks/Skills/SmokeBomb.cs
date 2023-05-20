@@ -19,7 +19,7 @@ namespace HBT.Skills
         {
             Cooldown = ConfigOption(8f, "Cooldown", "Vanilla is 6");
             CloakDur = ConfigOption(3f, "Cloak Duration", "Vanilla is 3");
-            Damage = ConfigOption(2, "Damage", "Decimal. Vanilla is 2");
+            Damage = ConfigOption(2f, "Damage", "Decimal. Vanilla is 2");
             base.Init();
         }
 
