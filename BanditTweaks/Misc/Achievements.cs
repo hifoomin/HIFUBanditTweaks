@@ -1,4 +1,4 @@
-﻿using HBT.Skills;
+﻿using HIFUBanditTweaks.Skills;
 using MonoMod.RuntimeDetour;
 using R2API;
 using RoR2;
@@ -6,7 +6,7 @@ using RoR2.Achievements.Bandit2;
 using System.Reflection;
 using static R2API.DamageAPI;
 
-namespace HBT.Misc
+namespace HIFUBanditTweaks.Misc
 {
     public class Achievements : MiscBase
     {

@@ -1,5 +1,4 @@
-﻿using HBT;
-using RoR2.Skills;
+﻿using RoR2.Skills;
 using UnityEngine.AddressableAssets;
 
 namespace HIFUBanditTweaks.Misc

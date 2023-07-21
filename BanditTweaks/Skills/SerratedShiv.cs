@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace HBT.Skills
+namespace HIFUBanditTweaks.Skills
 {
     public class SerratedShiv : TweakBase
     {

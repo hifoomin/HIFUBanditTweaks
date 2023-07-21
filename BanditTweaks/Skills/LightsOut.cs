@@ -7,7 +7,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using static R2API.DamageAPI;
 
-namespace HBT.Skills
+namespace HIFUBanditTweaks.Skills
 {
     public class LightsOut : TweakBase<LightsOut>
     {

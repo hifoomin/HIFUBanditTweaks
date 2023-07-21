@@ -1,7 +1,8 @@
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
-using HBT.Skills;
+using HarmonyLib;
+using HIFUBanditTweaks.Skills;
 using R2API;
 using R2API.ContentManagement;
 using R2API.Networking;
@@ -10,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace HBT
+namespace HIFUBanditTweaks
 {
     [BepInDependency(LanguageAPI.PluginGUID)]
     [BepInDependency(DamageAPI.PluginGUID)]
@@ -25,15 +26,35 @@ namespace HBT
 
         public const string PluginAuthor = "HIFU";
         public const string PluginName = "HIFUBanditTweaks";
-        public const string PluginVersion = "1.2.0";
+        public const string PluginVersion = "1.2.1";
 
         public static ConfigFile HBTConfig;
+        public static ConfigFile HBTBackupConfig;
+
+        public static ConfigEntry<bool> enableAutoConfig { get; set; }
+        public static ConfigEntry<string> latestVersion { get; set; }
+
         public static ManualLogSource HBTLogger;
+
+        public static bool _preVersioning = false;
 
         public void Awake()
         {
             HBTLogger = Logger;
             HBTConfig = Config;
+
+            HBTBackupConfig = new(Paths.ConfigPath + "\\" + PluginAuthor + "." + PluginName + ".Backup.cfg", true);
+            HBTBackupConfig.Bind(": DO NOT MODIFY THIS FILES CONTENTS :", ": DO NOT MODIFY THIS FILES CONTENTS :", ": DO NOT MODIFY THIS FILES CONTENTS :", ": DO NOT MODIFY THIS FILES CONTENTS :");
+
+            enableAutoConfig = HBTConfig.Bind("Config", "Enable Auto Config Sync", true, "Disabling this would stop HIFUBanditTweaks from syncing config whenever a new version is found.");
+            _preVersioning = !((Dictionary<ConfigDefinition, string>)AccessTools.DeclaredPropertyGetter(typeof(ConfigFile), "OrphanedEntries").Invoke(HBTConfig, null)).Keys.Any(x => x.Key == "Latest Version");
+            latestVersion = HBTConfig.Bind("Config", "Latest Version", PluginVersion, "DO NOT CHANGE THIS");
+            if (enableAutoConfig.Value && (_preVersioning || (latestVersion.Value != PluginVersion)))
+            {
+                latestVersion.Value = PluginVersion;
+                ConfigManager.VersionChanged = true;
+                HBTLogger.LogInfo("Config Autosync Enabled.");
+            }
 
             IEnumerable<Type> enumerable = from type in Assembly.GetExecutingAssembly().GetTypes()
                                            where !type.IsAbstract && type.IsSubclassOf(typeof(TweakBase))

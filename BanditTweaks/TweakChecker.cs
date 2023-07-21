@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HBT
+namespace HIFUBanditTweaks
 {
     public abstract class TweakBase<T> : TweakBase where T : TweakBase<T>
     {

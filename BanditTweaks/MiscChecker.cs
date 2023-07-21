@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HBT
+namespace HIFUBanditTweaks
 {
     public abstract class MiscBase<T> : MiscBase where T : MiscBase<T>
     {

@@ -1,4 +1,4 @@
-﻿namespace HBT
+﻿namespace HIFUBanditTweaks
 {
     public abstract class MiscBase
     {
@@ -7,7 +7,9 @@
 
         public T ConfigOption<T>(T value, string name, string description)
         {
-            return Main.HBTConfig.Bind<T>(Name, name, value, description).Value;
+            var config = Main.HBTConfig.Bind<T>(Name, name, value, description);
+            ConfigManager.HandleConfig<T>(config, Main.HBTBackupConfig, name);
+            return config.Value;
         }
 
         public abstract void Hooks();

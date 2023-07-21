@@ -1,7 +1,7 @@
 ﻿using RoR2.Skills;
 using UnityEngine.AddressableAssets;
 
-namespace HBT.Skills
+namespace HIFUBanditTweaks.Skills
 {
     public class SmokeBomb : TweakBase
     {

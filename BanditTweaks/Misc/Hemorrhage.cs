@@ -2,7 +2,7 @@
 using R2API;
 using RoR2;
 
-namespace HBT.Misc
+namespace HIFUBanditTweaks.Misc
 {
     public class Hemorrhage : MiscBase
     {
