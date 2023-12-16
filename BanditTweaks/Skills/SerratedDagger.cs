@@ -14,7 +14,7 @@ namespace HIFUBanditTweaks.Skills
 
         public override string SkillToken => "secondary";
 
-        public override string DescText => "Lunge and slash for <style=cIsDamage>" + d(Damage) + " damage</style>. Critical Strikes also cause <style=cIsHealth>hemorrhaging</style>.";
+        public override string DescText => "<style=cIsUtility>Lunge</style> and slash for <style=cIsDamage>" + d(Damage) + " damage</style>. Critical Strikes also cause <style=cIsHealth>hemorrhaging</style>.";
 
         public override void Init()
         {

@@ -16,9 +16,9 @@ namespace HIFUBanditTweaks.Skills
 
         public override string SkillToken => "secondary_alt";
 
-        public override string DescText => (Sidestep ? "Sidestep and throw" : "Throw") +
+        public override string DescText => (Sidestep ? "<style=cIsUtility>Sidestep</style> and throw" : "Throw") +
                                            " a hidden blade for <style=cIsDamage>" + d(Damage) + " damage</style>. Critical Strikes also cause <style=cIsHealth>hemorrhaging</style>." +
-                                           (Charges > 1 ? " Can hold up to " + Charges + " shivs." : "");
+                                           (Charges > 1 ? " <style=cIsUtility>Can hold up to " + Charges + " shivs</style>." : "");
 
         public override void Init()
         {
@@ -43,7 +43,7 @@ namespace HIFUBanditTweaks.Skills
             if (Sidestep && self.isAuthority)
             {
                 Vector3 direction = (self.inputBank.moveVector == Vector3.zero ? Vector3.zero : self.inputBank.moveVector.normalized);
-                Vector3 a = direction.normalized * 2.4f * self.moveSpeedStat;
+                Vector3 a = direction.normalized * 2.5f * self.moveSpeedStat;
                 self.characterMotor.Motor.ForceUnground();
                 self.characterMotor.velocity = a;
             }

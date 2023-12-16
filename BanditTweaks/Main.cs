@@ -26,7 +26,7 @@ namespace HIFUBanditTweaks
 
         public const string PluginAuthor = "HIFU";
         public const string PluginName = "HIFUBanditTweaks";
-        public const string PluginVersion = "1.2.1";
+        public const string PluginVersion = "1.2.2";
 
         public static ConfigFile HBTConfig;
         public static ConfigFile HBTBackupConfig;
@@ -55,6 +55,8 @@ namespace HIFUBanditTweaks
                 ConfigManager.VersionChanged = true;
                 HBTLogger.LogInfo("Config Autosync Enabled.");
             }
+
+            Specials.Init();
 
             IEnumerable<Type> enumerable = from type in Assembly.GetExecutingAssembly().GetTypes()
                                            where !type.IsAbstract && type.IsSubclassOf(typeof(TweakBase))

@@ -1,5 +1,7 @@
-﻿using MonoMod.Cil;
+﻿using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using RoR2.Skills;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace HIFUBanditTweaks.Skills
@@ -59,6 +61,30 @@ namespace HIFUBanditTweaks.Skills
         {
             var skullemoji = Addressables.LoadAssetAsync<SkillDef>("RoR2/Base/Bandit2/SkullRevolver.asset").WaitForCompletion();
             skullemoji.baseRechargeInterval = Cooldown;
+            skullemoji.canceledFromSprinting = false;
+        }
+    }
+
+    public static class Specials
+    {
+        public static void Init()
+        {
+            On.EntityStates.Bandit2.Weapon.BaseSidearmState.FixedUpdate += BaseSidearmState_FixedUpdate;
+            On.EntityStates.Bandit2.Weapon.BasePrepSidearmRevolverState.FixedUpdate += BasePrepSidearmRevolverState_FixedUpdate;
+        }
+
+        private static void BasePrepSidearmRevolverState_FixedUpdate(On.EntityStates.Bandit2.Weapon.BasePrepSidearmRevolverState.orig_FixedUpdate orig, EntityStates.Bandit2.Weapon.BasePrepSidearmRevolverState self)
+        {
+            self.fixedAge += Time.fixedDeltaTime;
+            if (self.fixedAge >= self.duration && !self.inputBank.skill4.down)
+            {
+                self.outer.SetNextState(self.GetNextState());
+            }
+        }
+
+        public static void BaseSidearmState_FixedUpdate(On.EntityStates.Bandit2.Weapon.BaseSidearmState.orig_FixedUpdate orig, EntityStates.Bandit2.Weapon.BaseSidearmState self)
+        {
+            self.fixedAge += Time.fixedDeltaTime;
         }
     }
 }
