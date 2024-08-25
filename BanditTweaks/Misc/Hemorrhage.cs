@@ -4,7 +4,7 @@ using RoR2;
 
 namespace HIFUBanditTweaks.Misc
 {
-    public class Hemorrhage : MiscBase
+    public class Hemorrhage : MiscBase<Hemorrhage>
     {
         public static float Interval;
         public static float DamagePerTick;

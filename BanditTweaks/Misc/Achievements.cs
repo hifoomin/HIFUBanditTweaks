@@ -8,7 +8,7 @@ using static R2API.DamageAPI;
 
 namespace HIFUBanditTweaks.Misc
 {
-    public class Achievements : MiscBase
+    public class Achievements : MiscBase<Achievements>
     {
         public static Hook hook;
         public static int hemoRequirement;

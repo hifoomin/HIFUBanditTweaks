@@ -3,7 +3,7 @@ using UnityEngine.AddressableAssets;
 
 namespace HIFUBanditTweaks.Misc
 {
-    public class Reload : MiscBase
+    public class Reload : MiscBase<Reload>
     {
         public static float ReloadDur;
 

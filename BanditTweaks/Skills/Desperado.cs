@@ -22,7 +22,7 @@ namespace HIFUBanditTweaks.Skills
         {
             Cooldown = ConfigOption(6f, "Cooldown", "Vanilla is 4");
             Damage = ConfigOption(8f, "Damage", "Decimal. Vanilla is 6");
-            StackDamage = ConfigOption(0.06f, "Desperado Total Damage Percent per Token", "Vanilla is 0.1");
+            StackDamage = ConfigOption(0.055f, "Damage Per Token", "Vanilla is 0.1. Additive Damage increase per token = Damage Per Token * Damage");
             base.Init();
         }
 
