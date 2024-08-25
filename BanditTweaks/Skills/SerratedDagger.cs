@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 
 namespace HIFUBanditTweaks.Skills
 {
-    public class SerratedDagger : TweakBase
+    public class SerratedDagger : TweakBase<SerratedDagger>
     {
         public static float Damage;
         public static float Cooldown;

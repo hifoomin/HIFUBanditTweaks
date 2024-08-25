@@ -15,7 +15,7 @@ namespace HIFUBanditTweaks.Misc
         public override void Init()
         {
             Interval = ConfigOption(0.25f, "Tick Interval", "Decimal. Vanilla is 0.25");
-            DamagePerTick = ConfigOption(0.75f, "Tick Damage", "Vanilla is 0.333");
+            DamagePerTick = ConfigOption(1f, "Tick Damage", "Vanilla is 0.333");
             TotalDuration = ConfigOption(4f, "Total Duration", "Vanilla is 15");
             base.Init();
         }

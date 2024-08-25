@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 
 namespace HIFUBanditTweaks.Skills
 {
-    public class Burst : TweakBase
+    public class Burst : TweakBase<Burst>
     {
         public static int PelletCount;
         public static float Damage;

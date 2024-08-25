@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 
 namespace HIFUBanditTweaks.Skills
 {
-    public class SerratedShiv : TweakBase
+    public class SerratedShiv : TweakBase<SerratedShiv>
     {
         public static float Damage;
         public static float Cooldown;

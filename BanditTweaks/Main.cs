@@ -6,6 +6,7 @@ using HIFUBanditTweaks.Skills;
 using R2API;
 using R2API.ContentManagement;
 using R2API.Networking;
+using RoR2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,8 @@ namespace HIFUBanditTweaks
 
         public static bool _preVersioning = false;
 
+        public static BodyIndex banditBodyIndex;
+
         public void Awake()
         {
             HBTLogger = Logger;
@@ -55,6 +58,8 @@ namespace HIFUBanditTweaks
                 ConfigManager.VersionChanged = true;
                 HBTLogger.LogInfo("Config Autosync Enabled.");
             }
+
+            On.RoR2.BodyCatalog.Init += BodyCatalog_Init;
 
             Specials.Init();
 
@@ -88,6 +93,12 @@ namespace HIFUBanditTweaks
                 }
             }
             NetworkingAPI.RegisterMessageType<SyncCooldownReduction>();
+        }
+
+        private void BodyCatalog_Init(On.RoR2.BodyCatalog.orig_Init orig)
+        {
+            orig();
+            banditBodyIndex = BodyCatalog.FindBodyIndex("Bandit2Body(Clone)");
         }
 
         public bool ValidateTweak(TweakBase tb)

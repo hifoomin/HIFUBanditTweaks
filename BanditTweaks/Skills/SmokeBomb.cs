@@ -7,7 +7,7 @@ using UnityEngine.AddressableAssets;
 
 namespace HIFUBanditTweaks.Skills
 {
-    public class SmokeBomb : TweakBase
+    public class SmokeBomb : TweakBase<SmokeBomb>
     {
         public static float Cooldown;
         public static float CloakDur;

@@ -26,7 +26,7 @@ namespace HIFUBanditTweaks.Skills
         {
             Cooldown = ConfigOption(6f, "Cooldown", "Vanilla is 4");
             Damage = ConfigOption(8f, "Damage", "Decimal. Vanilla is 6");
-            CooldownReduction = ConfigOption(0.33f, "Non-Special Cooldown Reduction on Kill", "Decimal. Vanilla is 1");
+            CooldownReduction = ConfigOption(1f, "Non-Special Cooldown Reduction on Kill", "Decimal. Vanilla is 1");
             base.Init();
         }
 

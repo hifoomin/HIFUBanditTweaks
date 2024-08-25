@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 
 namespace HIFUBanditTweaks.Skills
 {
-    public class Blast : TweakBase
+    public class Blast : TweakBase<Blast>
     {
         public static float Damage;
         public static int AmmoCount;

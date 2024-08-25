@@ -6,7 +6,7 @@ using UnityEngine.AddressableAssets;
 
 namespace HIFUBanditTweaks.Skills
 {
-    public class Desperado : TweakBase
+    public class Desperado : TweakBase<Desperado>
     {
         public static float Damage;
         public static float StackDamage;
@@ -22,7 +22,7 @@ namespace HIFUBanditTweaks.Skills
         {
             Cooldown = ConfigOption(6f, "Cooldown", "Vanilla is 4");
             Damage = ConfigOption(8f, "Damage", "Decimal. Vanilla is 6");
-            StackDamage = ConfigOption(0.05f, "Desperado Total Damage Percent per Token", "Vanilla is 0.1");
+            StackDamage = ConfigOption(0.06f, "Desperado Total Damage Percent per Token", "Vanilla is 0.1");
             base.Init();
         }
 

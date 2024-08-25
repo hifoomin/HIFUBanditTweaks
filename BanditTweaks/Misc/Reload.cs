@@ -11,7 +11,7 @@ namespace HIFUBanditTweaks.Misc
 
         public override void Init()
         {
-            ReloadDur = ConfigOption(0.3f, "Reload Duration", "Vanilla is ??");
+            ReloadDur = ConfigOption(0.3f, "Reload Duration", "Vanilla is 0.3");
             base.Init();
         }
 
