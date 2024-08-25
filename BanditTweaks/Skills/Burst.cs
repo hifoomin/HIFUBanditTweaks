@@ -1,5 +1,6 @@
 ﻿using EntityStates;
 using RoR2.Skills;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace HIFUBanditTweaks.Skills

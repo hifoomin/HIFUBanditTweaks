@@ -26,7 +26,7 @@ namespace HIFUBanditTweaks
 
         public const string PluginAuthor = "HIFU";
         public const string PluginName = "HIFUBanditTweaks";
-        public const string PluginVersion = "1.2.2";
+        public const string PluginVersion = "1.2.5";
 
         public static ConfigFile HBTConfig;
         public static ConfigFile HBTBackupConfig;

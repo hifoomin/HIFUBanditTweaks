@@ -9,6 +9,7 @@ namespace HIFUBanditTweaks.Skills
         public static float Damage;
         public static int AmmoCount;
         public static float AutofireDur;
+        public static bool VanillaSpread;
 
         public override string Name => ": Primary :: Blast";
 
@@ -21,6 +22,7 @@ namespace HIFUBanditTweaks.Skills
             Damage = ConfigOption(2.2f, "Damage", "Decimal. Vanilla is 3.3");
             AmmoCount = ConfigOption(6, "Charges", "Vanilla is 4");
             AutofireDur = ConfigOption(0.12f, "Autofire Duration per Bullet", "");
+            VanillaSpread = ConfigOption(false, "Vanilla Spread", "Uses vanilla's spread and recoil settings, making the skill much more inaccurate");
             base.Init();
         }
 
@@ -45,11 +47,16 @@ namespace HIFUBanditTweaks.Skills
             if (self is EntityStates.Bandit2.Weapon.Bandit2FireRifle)
             {
                 self.damageCoefficient = Damage;
-                self.recoilAmplitudeX = 0.15f;
-                self.recoilAmplitudeY = 0.7f;
-                self.spreadYawScale = 0f;
-                self.spreadPitchScale = 0f;
-                self.bulletRadius = 0.4f;
+
+                if (!VanillaSpread)
+                {
+                    self.recoilAmplitudeX = 0.15f;
+                    self.recoilAmplitudeY = 0.7f;
+                    self.spreadYawScale = 0f;
+                    self.spreadPitchScale = 0f;
+                    self.bulletRadius = 0.4f;
+                }
+
                 self.minimumBaseDuration = AutofireDur;
             }
             orig(self);

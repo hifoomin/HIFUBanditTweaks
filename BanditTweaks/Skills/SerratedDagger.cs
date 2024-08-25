@@ -8,6 +8,7 @@ namespace HIFUBanditTweaks.Skills
     {
         public static float Damage;
         public static float Cooldown;
+        public static float ProcCoefficient;
         public static bool Lunge;
 
         public override string Name => ": Secondary : Serrated Dagger";
@@ -20,6 +21,7 @@ namespace HIFUBanditTweaks.Skills
         {
             Damage = ConfigOption(6f, "Damage", "Decimal. Vanilla is 3.6");
             Cooldown = ConfigOption(7f, "Cooldown", "Vanilla is 4");
+            ProcCoefficient = ConfigOption(0f, "Proc Coefficient", "Vanilla is 1");
             Lunge = ConfigOption(true, "Enable lunge?", "Vanilla is false");
             base.Init();
         }
@@ -33,7 +35,7 @@ namespace HIFUBanditTweaks.Skills
         private void SlashBlade_OnEnter(On.EntityStates.Bandit2.Weapon.SlashBlade.orig_OnEnter orig, EntityStates.Bandit2.Weapon.SlashBlade self)
         {
             self.damageCoefficient = Damage;
-            self.procCoefficient = 0;
+            self.procCoefficient = ProcCoefficient;
             orig(self);
             if (Lunge && self.isAuthority)
             {
