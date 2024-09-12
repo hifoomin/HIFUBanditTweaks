@@ -19,7 +19,7 @@ namespace HIFUBanditTweaks
     [BepInDependency(R2APIContentManager.PluginGUID)]
     [BepInDependency(RecalculateStatsAPI.PluginGUID)]
     [BepInDependency(NetworkingAPI.PluginGUID)]
-    // [BepInDependency("com.Wolfo.WolfoQualityOfLife", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.Wolfo.WolfoQualityOfLife", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
     public class Main : BaseUnityPlugin
     {
@@ -27,7 +27,7 @@ namespace HIFUBanditTweaks
 
         public const string PluginAuthor = "HIFU";
         public const string PluginName = "HIFUBanditTweaks";
-        public const string PluginVersion = "1.2.5";
+        public const string PluginVersion = "1.2.6";
 
         public static ConfigFile HBTConfig;
         public static ConfigFile HBTBackupConfig;
@@ -59,7 +59,7 @@ namespace HIFUBanditTweaks
                 HBTLogger.LogInfo("Config Autosync Enabled.");
             }
 
-            On.RoR2.BodyCatalog.Init += BodyCatalog_Init;
+            On.RoR2.BodyCatalog.Init += BodyCatalog_Init1;
 
             Specials.Init();
 
@@ -95,9 +95,9 @@ namespace HIFUBanditTweaks
             NetworkingAPI.RegisterMessageType<SyncCooldownReduction>();
         }
 
-        private void BodyCatalog_Init(On.RoR2.BodyCatalog.orig_Init orig)
+        private System.Collections.IEnumerator BodyCatalog_Init1(On.RoR2.BodyCatalog.orig_Init orig)
         {
-            orig();
+            yield return orig();
             banditBodyIndex = BodyCatalog.FindBodyIndex("Bandit2Body(Clone)");
         }
 

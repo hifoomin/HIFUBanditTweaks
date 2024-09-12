@@ -23,12 +23,12 @@ namespace HIFUBanditTweaks.Misc
         public override void Hooks()
         {
             On.RoR2.DotController.InitDotCatalog += DotController_InitDotCatalog1;
-            IL.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
+            IL.RoR2.GlobalEventManager.ProcessHitEnemy += GlobalEventManager_ProcessHitEnemy;
             GlobalEventManager.onServerDamageDealt += GlobalEventManager_onServerDamageDealt;
             Changes();
         }
 
-        private void GlobalEventManager_OnHitEnemy(ILContext il)
+        private void GlobalEventManager_ProcessHitEnemy(ILContext il)
         {
             ILCursor c = new(il);
 
